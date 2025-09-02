@@ -6,50 +6,86 @@
 <title>Task Routine</title>
 <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" type="image/png" />
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
   body {
-    font-family: Arial, sans-serif;
-    max-width: 500px;
+    font-family: 'Share Tech Mono', monospace;
+    max-width: 600px;
     margin: 30px auto;
-    padding: 0 15px;
-    background: #f0f0f0;
+    padding: 20px 15px;
+    color: #f0f0f0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-image 1s ease-in-out;
+    min-height: 100vh;
+    box-sizing: border-box;
+    /* overlay for dark effect */
+    position: relative;
+  }
+  /* dark overlay to improve readability */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: -1;
   }
 
   h1 {
     text-align: center;
-    color: #333;
+    margin-bottom: 25px;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 5px #000;
   }
 
   #taskInput, #taskStartTime {
-    padding: 10px;
-    font-size: 16px;
-    margin-right: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 12px 15px;
+    font-size: 1rem;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: #eee;
+    transition: box-shadow 0.3s ease;
+  }
+
+  #taskInput:focus, #taskStartTime:focus {
+    box-shadow: 0 0 12px #00ffcc;
+    background: rgba(0, 255, 204, 0.15);
+    color: #00ffcc;
   }
 
   #taskInput {
-    width: 60%;
-    margin-bottom: 10px;
+    width: 55%;
+    margin-bottom: 15px;
   }
 
   #taskStartTime {
     width: 35%;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
   }
 
   button {
-    padding: 10px 14px;
-    font-size: 16px;
+    padding: 12px 20px;
+    font-size: 1rem;
     cursor: pointer;
-    background-color: #4CAF50;
+    background-color: #00ffcc;
     border: none;
-    color: white;
-    border-radius: 4px;
-    margin-bottom: 20px;
+    border-radius: 5px;
+    color: #002b2b;
+    font-weight: bold;
+    box-shadow: 0 0 10px #00ffcc;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   button:hover {
-    background-color: #45a049;
+    background-color: #00b38f;
+    color: #d0fff8;
+    box-shadow: 0 0 15px #00b38f;
   }
 
   ul {
@@ -58,13 +94,20 @@
   }
 
   li {
-    background: white;
-    padding: 10px 15px;
-    margin-bottom: 12px;
-    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    border-radius: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 0 8px #00ffccaa;
+    transition: background 0.3s ease;
+  }
+
+  li:hover {
+    background: rgba(0, 255, 204, 0.15);
+    box-shadow: 0 0 12px #00ffcc;
   }
 
   .task-details {
@@ -72,41 +115,48 @@
   }
 
   .task-text {
-    font-weight: bold;
-    margin-bottom: 4px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+    color: #00ffcc;
+    text-shadow: 1px 1px 3px #004d4d;
   }
 
   .task-times {
-    font-size: 12px;
-    color: #666;
+    font-size: 0.85rem;
+    color: #b2fff7cc;
+    font-style: italic;
   }
 
   .delete-btn {
-    background-color: #e74c3c;
+    background-color: #ff004c;
     border: none;
     color: white;
-    padding: 6px 10px;
-    border-radius: 4px;
+    padding: 8px 14px;
+    border-radius: 6px;
     cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 0 8px #ff004caa;
+    transition: background-color 0.3s ease;
   }
 
   .delete-btn:hover {
-    background-color: #c0392b;
+    background-color: #b30036;
+    box-shadow: 0 0 12px #b30036;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 520px) {
     #taskInput, #taskStartTime {
       width: 100%;
       margin-right: 0;
     }
-
     li {
       flex-direction: column;
       align-items: flex-start;
     }
-
     .delete-btn {
-      margin-top: 8px;
+      margin-top: 10px;
       align-self: flex-end;
     }
   }
@@ -114,10 +164,10 @@
 </head>
 <body>
 
-<h1>Task Routine</h1>
+<h1>Detective Task Routine</h1>
 
 <div>
-  <input type="text" id="taskInput" placeholder="Enter your task" />
+  <input type="text" id="taskInput" placeholder="Enter your task..." />
   <input type="datetime-local" id="taskStartTime" />
   <button onclick="addTask()">Add Task</button>
 </div>
@@ -125,6 +175,25 @@
 <ul id="taskList"></ul>
 
 <script>
+  // Detective-style backgrounds - make sure they are free or from a free source
+  const backgrounds = [
+    'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1350&q=80', // desk with magnifying glass
+    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80', // mysterious city night
+    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1350&q=80', // vintage typewriter
+    'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1350&q=80', // old books
+    'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1350&q=80'  // detective coat and hat
+  ];
+
+  function setRandomBackground() {
+    const bg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+    document.body.style.backgroundImage = `url('${bg}')`;
+  }
+
+  setRandomBackground();
+
+  // Optionally change background every 30 seconds:
+  setInterval(setRandomBackground, 30000);
+
   let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
   function saveTasks() {
