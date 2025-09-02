@@ -1,166 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Task Routine</title>
-<link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" type="image/png" />
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Task Routine</title>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" type="image/png" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
-  body {
-    font-family: 'Share Tech Mono', monospace;
-    max-width: 600px;
-    margin: 30px auto;
-    padding: 20px 15px;
-    color: #f0f0f0;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    transition: background-image 1s ease-in-out;
-    min-height: 100vh;
-    box-sizing: border-box;
-    /* overlay for dark effect */
-    position: relative;
-  }
-  /* dark overlay to improve readability */
-  body::before {
-    content: "";
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.7);
-    z-index: -1;
-  }
+    body {
+      font-family: 'Share Tech Mono', monospace;
+      max-width: 700px;
+      margin: 30px auto;
+      padding: 20px 15px;
+      color: #f0f0f0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: background-image 1s ease-in-out;
+      min-height: 100vh;
+      box-sizing: border-box;
+      position: relative;
+    }
 
-  h1 {
-    text-align: center;
-    margin-bottom: 25px;
-    font-size: 2.5rem;
-    letter-spacing: 2px;
-    text-shadow: 2px 2px 5px #000;
-  }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: -1;
+    }
 
-  #taskInput, #taskStartTime {
-    padding: 12px 15px;
-    font-size: 1rem;
-    margin-right: 10px;
-    border: none;
-    border-radius: 5px;
-    outline: none;
-    box-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.1);
-    color: #eee;
-    transition: box-shadow 0.3s ease;
-  }
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 5px #000;
+    }
 
-  #taskInput:focus, #taskStartTime:focus {
-    box-shadow: 0 0 6px #00ffcc;
-    background: rgba(0, 255, 204, 0.15);
-    color: #00ffcc;
-  }
-
-  #taskInput {
-    width: 55%;
-    margin-bottom: 15px;
-  }
-
-  #taskStartTime {
-    width: 35%;
-    margin-bottom: 15px;
-  }
-
-  button {
-    padding: 12px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    background-color: #00ffcc;
-    border: none;
-    border-radius: 5px;
-    color: #002b2b;
-    font-weight: bold;
-    box-shadow: 0 0 10px #00ffcc;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  button:hover {
-    background-color: #00b38f;
-    color: #d0fff8;
-    box-shadow: 0 0 15px #00b38f;
-  }
-
-  ul {
-    list-style: none;
-    padding-left: 0;
-  }
-
-  li {
-    background: rgba(0, 0, 0, 0.6);
-    padding: 14px 18px;
-    margin-bottom: 16px;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 0 8px #00ffccaa;
-    transition: background 0.3s ease;
-  }
-
-  li:hover {
-    background: rgba(0, 255, 204, 0.15);
-    box-shadow: 0 0 12px #00ffcc;
-  }
-
-  .task-details {
-    max-width: 75%;
-  }
-
-  .task-text {
-    font-weight: 700;
-    font-size: 1.1rem;
-    margin-bottom: 6px;
-    letter-spacing: 0.5px;
-    color: #00ffcc;
-    text-shadow: 1px 1px 3px #004d4d;
-  }
-
-  .task-times {
-    font-size: 0.85rem;
-    color: #b2fff7cc;
-    font-style: italic;
-  }
-
-  .delete-btn {
-    background-color: #ff004c;
-    border: none;
-    color: white;
-    padding: 8px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    box-shadow: 0 0 8px #ff004caa;
-    transition: background-color 0.3s ease;
-  }
-
-  .delete-btn:hover {
-    background-color: #b30036;
-    box-shadow: 0 0 12px #b30036;
-  }
-
-  @media (max-width: 520px) {
     #taskInput, #taskStartTime {
-      width: 100%;
-      margin-right: 0;
+      padding: 12px 15px;
+      font-size: 1rem;
+      margin-right: 10px;
+      border: none;
+      border-radius: 5px;
+      outline: none;
+      box-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      color: #eee;
     }
+
+    #taskInput:focus, #taskStartTime:focus {
+      box-shadow: 0 0 6px #00ffcc;
+      background: rgba(0, 255, 204, 0.15);
+      color: #00ffcc;
+    }
+
+    #taskInput {
+      width: 55%;
+      margin-bottom: 15px;
+    }
+
+    #taskStartTime {
+      width: 35%;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      background-color: #00ffcc;
+      border: none;
+      border-radius: 5px;
+      color: #002b2b;
+      font-weight: bold;
+      box-shadow: 0 0 10px #00ffcc;
+    }
+
+    button:hover {
+      background-color: #00b38f;
+      color: #d0fff8;
+      box-shadow: 0 0 15px #00b38f;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
     li {
-      flex-direction: column;
-      align-items: flex-start;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 0 8px #00ffccaa;
     }
+
+    .task-details {
+      max-width: 75%;
+    }
+
+    .task-text {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+      color: #00ffcc;
+      text-shadow: 1px 1px 3px #004d4d;
+    }
+
+    .task-times {
+      font-size: 0.85rem;
+      color: #b2fff7cc;
+      font-style: italic;
+    }
+
+    .task-times span.gold {
+      color: gold;
+    }
+
     .delete-btn {
-      margin-top: 10px;
-      align-self: flex-end;
+      background-color: #ff004c;
+      border: none;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 0 8px #ff004caa;
     }
-  }
-</style>
+
+    .delete-btn:hover {
+      background-color: #b30036;
+      box-shadow: 0 0 12px #b30036;
+    }
+
+    .done-checkbox {
+      margin-right: 10px;
+      transform: scale(1.2);
+    }
+
+    .counts {
+      margin: 20px 0;
+      text-align: center;
+      font-size: 1.1rem;
+      color: #00ffcc;
+    }
+
+    canvas {
+      margin: 30px auto;
+      display: block;
+      max-width: 100%;
+    }
+
+    @media (max-width: 520px) {
+      #taskInput, #taskStartTime {
+        width: 100%;
+        margin-right: 0;
+      }
+      li {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .delete-btn {
+        margin-top: 10px;
+        align-self: flex-end;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -172,15 +183,24 @@
   <button onclick="addTask()">Add Task</button>
 </div>
 
+<div class="counts">
+  <span id="undoneCount">Undone: 0</span> | 
+  <span id="doneCount">Done: 0</span>
+</div>
+
+<canvas id="taskChart" height="150"></canvas>
+
 <ul id="taskList"></ul>
 
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
-  // Detective-style backgrounds - make sure they are free or from a free source
   const backgrounds = [
-    'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1350&q=90', // desk with magnifying glass
-    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1350&q=90', // vintage typewriter
-    'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1350&q=90', // old books
-    'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1350&q=90'  // detective coat and hat
+    'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1350&q=90',
+    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1350&q=90',
+    'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1350&q=90',
+    'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1350&q=90'
   ];
 
   function setRandomBackground() {
@@ -189,8 +209,6 @@
   }
 
   setRandomBackground();
-
-  // Optionally change background every 20 seconds:
   setInterval(setRandomBackground, 20000);
 
   let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
@@ -211,7 +229,8 @@
     const task = {
       text: taskInput.value.trim(),
       createdAt: new Date().toISOString(),
-      startTime: startTimeInput.value
+      startTime: startTimeInput.value,
+      done: false
     };
 
     tasks.push(task);
@@ -226,10 +245,8 @@
     const taskList = document.getElementById('taskList');
     taskList.innerHTML = '';
 
-    if (tasks.length === 0) {
-      taskList.innerHTML = '<li>No tasks yet. Add one above!</li>';
-      return;
-    }
+    let doneCount = 0;
+    let undoneCount = 0;
 
     tasks.forEach((task, index) => {
       const li = document.createElement('li');
@@ -237,15 +254,26 @@
       const details = document.createElement('div');
       details.className = 'task-details';
 
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.className = 'done-checkbox';
+      checkbox.checked = task.done;
+      checkbox.onchange = () => {
+        task.done = checkbox.checked;
+        saveTasks();
+        renderTasks();
+      };
+
       const taskText = document.createElement('div');
       taskText.className = 'task-text';
       taskText.textContent = task.text;
 
-      const taskTimes = document.createElement('div');
-      taskTimes.className = 'task-times';
       const created = new Date(task.createdAt).toLocaleString();
       const start = new Date(task.startTime).toLocaleString();
-      taskTimes.innerHTML = `Created: ${created} | Starts at: ${start}`;
+
+      const taskTimes = document.createElement('div');
+      taskTimes.className = 'task-times';
+      taskTimes.innerHTML = `Created: ${created} | <span class="gold">Starts at: ${start}</span>`;
 
       details.appendChild(taskText);
       details.appendChild(taskTimes);
@@ -261,10 +289,53 @@
         }
       };
 
+      li.appendChild(checkbox);
       li.appendChild(details);
       li.appendChild(deleteBtn);
 
       taskList.appendChild(li);
+
+      if (task.done) doneCount++;
+      else undoneCount++;
+    });
+
+    document.getElementById('doneCount').textContent = `Done: ${doneCount}`;
+    document.getElementById('undoneCount').textContent = `Undone: ${undoneCount}`;
+    updateChart(doneCount, undoneCount);
+  }
+
+  let taskChart;
+
+  function updateChart(done, undone) {
+    const ctx = document.getElementById('taskChart').getContext('2d');
+    if (taskChart) taskChart.destroy();
+
+    taskChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Done', 'Undone'],
+        datasets: [{
+          label: 'Tasks Status',
+          data: [done, undone],
+          backgroundColor: 'rgba(0, 255, 204, 0.2)',
+          borderColor: '#00ffcc',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        scales: {
+          y: { beginAtZero: true }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: '#00ffcc'
+            }
+          }
+        }
+      }
     });
   }
 
