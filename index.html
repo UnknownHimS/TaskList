@@ -54,7 +54,7 @@
   }
 
   #taskInput:focus, #taskStartTime:focus {
-    box-shadow: 0 0 12px #00ffcc;
+    box-shadow: 0 0 6px #00ffcc;
     background: rgba(0, 255, 204, 0.15);
     color: #00ffcc;
   }
@@ -177,11 +177,10 @@
 <script>
   // Detective-style backgrounds - make sure they are free or from a free source
   const backgrounds = [
-    'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1350&q=80', // desk with magnifying glass
-    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80', // mysterious city night
-    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1350&q=80', // vintage typewriter
-    'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1350&q=80', // old books
-    'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1350&q=80'  // detective coat and hat
+    'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1350&q=90', // desk with magnifying glass
+    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1350&q=90', // vintage typewriter
+    'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1350&q=90', // old books
+    'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1350&q=90'  // detective coat and hat
   ];
 
   function setRandomBackground() {
@@ -191,8 +190,8 @@
 
   setRandomBackground();
 
-  // Optionally change background every 30 seconds:
-  setInterval(setRandomBackground, 30000);
+  // Optionally change background every 20 seconds:
+  setInterval(setRandomBackground, 20000);
 
   let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
