@@ -324,7 +324,7 @@
     }
   });
 
-    const labels = Object.keys(dataByDate).sort((a, b) => new Date(b) - new Date(a)); // Newest to oldest
+  const labels = Object.keys(dataByDate).sort((a, b) => new Date(a) - new Date(b)); // Oldest to newest
   const netProgress = labels.map(label => {
     const d = dataByDate[label];
     return d.done - d.undone;
