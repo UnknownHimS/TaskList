@@ -7,7 +7,7 @@
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" type="image/png" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
-
+    /* (No changes to CSS to respect your request) */
     body {
       font-family: 'Share Tech Mono', monospace;
       max-width: 700px;
@@ -192,7 +192,6 @@
 
 <ul id="taskList"></ul>
 
-<!-- Chart.js CDN -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
@@ -248,7 +247,10 @@
     let doneCount = 0;
     let undoneCount = 0;
 
-    tasks.forEach((task, index) => {
+    // Render newest tasks at top (reverse chronological)
+    const reversedTasks = [...tasks].reverse();
+
+    reversedTasks.forEach((task, index) => {
       const li = document.createElement('li');
 
       const details = document.createElement('div');
@@ -283,7 +285,7 @@
       deleteBtn.textContent = 'Delete';
       deleteBtn.onclick = () => {
         if (confirm('Delete this task?')) {
-          tasks.splice(index, 1);
+          tasks.splice(tasks.indexOf(task), 1);
           saveTasks();
           renderTasks();
         }
@@ -301,28 +303,56 @@
 
     document.getElementById('doneCount').textContent = `Done: ${doneCount}`;
     document.getElementById('undoneCount').textContent = `Undone: ${undoneCount}`;
-    updateChart(doneCount, undoneCount);
+
+    updateChart();
   }
 
   let taskChart;
 
-  function updateChart(done, undone) {
+  function updateChart() {
+    const dataByDate = {};
+
+    tasks.forEach(task => {
+      const dateKey = new Date(task.createdAt).toLocaleDateString();
+      if (!dataByDate[dateKey]) {
+        dataByDate[dateKey] = { done: 0, undone: 0 };
+      }
+      if (task.done) {
+        dataByDate[dateKey].done++;
+      } else {
+        dataByDate[dateKey].undone++;
+      }
+    });
+
+    const labels = Object.keys(dataByDate).sort((a, b) => new Date(a) - new Date(b));
+    const doneData = labels.map(label => dataByDate[label].done);
+    const undoneData = labels.map(label => dataByDate[label].undone);
+
     const ctx = document.getElementById('taskChart').getContext('2d');
     if (taskChart) taskChart.destroy();
 
     taskChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: ['Done', 'Undone'],
-        datasets: [{
-          label: 'Tasks Status',
-          data: [done, undone],
-          backgroundColor: 'rgba(0, 255, 204, 0.2)',
-          borderColor: '#00ffcc',
-          borderWidth: 2,
-          fill: true,
-          tension: 0.4
-        }]
+        labels: labels,
+        datasets: [
+          {
+            label: 'Done',
+            data: doneData,
+            borderColor: '#00ffcc',
+            backgroundColor: 'rgba(0, 255, 204, 0.2)',
+            tension: 0.4,
+            fill: true
+          },
+          {
+            label: 'Undone',
+            data: undoneData,
+            borderColor: '#ff004c',
+            backgroundColor: 'rgba(255, 0, 76, 0.2)',
+            tension: 0.4,
+            fill: true
+          }
+        ]
       },
       options: {
         scales: {
@@ -330,16 +360,13 @@
         },
         plugins: {
           legend: {
-            labels: {
-              color: '#00ffcc'
-            }
+            labels: { color: '#00ffcc' }
           }
         }
       }
     });
   }
 
-  // Initial render
   renderTasks();
 </script>
 
