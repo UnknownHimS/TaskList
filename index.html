@@ -310,83 +310,85 @@
   let taskChart;
 
   function updateChart() {
-  const dataByDate = {};
+    const dataByDate = {};
 
-  tasks.forEach(task => {
-    const dateKey = new Date(task.createdAt).toLocaleDateString();
-    if (!dataByDate[dateKey]) {
-      dataByDate[dateKey] = { done: 0, undone: 0 };
-    }
-    if (task.done) {
-      dataByDate[dateKey].done++;
-    } else {
-      dataByDate[dateKey].undone++;
-    }
-  });
+    tasks.forEach(task => {
+      const dateKey = new Date(task.createdAt).toLocaleDateString();
+      if (!dataByDate[dateKey]) {
+        dataByDate[dateKey] = { done: 0, undone: 0 };
+      }
+      if (task.done) {
+        dataByDate[dateKey].done++;
+      } else {
+        dataByDate[dateKey].undone++;
+      }
+    });
 
-  const labels = Object.keys(dataByDate).sort((a, b) => new Date(a) - new Date(b)); // Oldest to newest
-  const netProgress = labels.map(label => {
-    const d = dataByDate[label];
-    return d.done - d.undone;
-  });
+    const labels = Object.keys(dataByDate).sort((a, b) => new Date(a) - new Date(b)); // Oldest to newest
+    const netProgress = labels.map(label => {
+      const d = dataByDate[label];
+      return d.done - d.undone;
+    });
 
+    const ctx = document.getElementById('taskChart').getContext('2d');
+    if (taskChart) taskChart.destroy();
 
-  const ctx = document.getElementById('taskChart').getContext('2d');
-  if (taskChart) taskChart.destroy();
-
-  taskChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          label: 'Net Task Progress',
-          data: netProgress,
-          borderColor: '#00ffcc',
-          backgroundColor: 'rgba(0, 255, 204, 0.1)',
-          tension: 0.3,
-          fill: true,
-          pointRadius: 4,
-          pointBackgroundColor: '#00ffcc'
-        }
-      ]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: false,
-          title: {
-            display: true,
-            text: 'Undone - Done ',
-            color: '#00ffcc'
+    taskChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Net Task Progress',
+            data: netProgress,
+            borderColor: '#00ffcc',
+            backgroundColor: 'rgba(0, 255, 204, 0.1)',
+            tension: 0.3,
+            fill: true,
+            pointRadius: 4,
+            pointBackgroundColor: '#00ffcc'
+          }
+        ]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            title: {
+              display: true,
+              text: 'Done - Undone',
+              color: '#00ffcc'
+            },
+            ticks: {
+              color: '#00ffcc',
+              stepSize: 1,
+              callback: function(value) {
+                return Number.isInteger(value) ? value : '';
+              }
+            },
+            grid: {
+              color: 'rgba(0, 255, 204, 0.1)'
+            }
           },
-          ticks: {
-            color: '#00ffcc'
-          },
-          grid: {
-            color: 'rgba(0, 255, 204, 0.1)'
+          x: {
+            ticks: {
+              color: '#00ffcc'
+            },
+            grid: {
+              color: 'rgba(0, 255, 204, 0.05)'
+            }
           }
         },
-        x: {
-          ticks: {
-            color: '#00ffcc'
-          },
-          grid: {
-            color: 'rgba(0, 255, 204, 0.05)'
-          }
-        }
-      },
-      plugins: {
-        legend: {
-          labels: {
-            color: '#00ffcc'
+        plugins: {
+          legend: {
+            labels: {
+              color: '#00ffcc'
+            }
           }
         }
       }
-    }
-  });
-}
-
+    });
+  }
 
   renderTasks();
 </script>
