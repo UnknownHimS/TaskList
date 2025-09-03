@@ -324,11 +324,12 @@
     }
   });
 
-  const labels = Object.keys(dataByDate).sort((a, b) => new Date(a) - new Date(b));
+    const labels = Object.keys(dataByDate).sort((a, b) => new Date(b) - new Date(a)); // Newest to oldest
   const netProgress = labels.map(label => {
     const d = dataByDate[label];
     return d.done - d.undone;
   });
+
 
   const ctx = document.getElementById('taskChart').getContext('2d');
   if (taskChart) taskChart.destroy();
